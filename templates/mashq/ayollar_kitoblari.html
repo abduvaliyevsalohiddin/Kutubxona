@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ayollar_kitoblari</title>
+</head>
+<body>
+<h1>Tizimdagi ayol mualliflarga tegishli kitoblar ro'yhati </h1>
+    <br>
+    <hr>
+    {% for kitob in kitoblar %}
+    <br>
+    <h1>{{kitob.nom}}  -- {{kitob.muallif}}</h1>
+    {% endfor %}
+</body>
+</html>
