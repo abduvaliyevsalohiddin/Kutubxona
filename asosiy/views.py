@@ -63,8 +63,13 @@ def hamma_kitob(request):
 
 
 def hamma_record(request):
+    soz = request.GET.get("qidirish_sozi")
+    natija = Record.objects.all()
+    if soz:
+        natija = natija.filter(talaba__ism__contains = soz)
+
     content = {
-        "record": Record.objects.all()
+        "record": natija
     }
     return render(request, "vazifa/hamma_record.html", content)
 
