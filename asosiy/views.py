@@ -54,7 +54,7 @@ def hamma_kitob(request):
     soz = request.GET.get("qidirish_sozi")
     natija = Kitob.objects.all()
     if soz:
-        natija = natija.filter(muallif__ism__contains=soz ) | natija.filter(nom__contains=soz )
+        natija = natija.filter(muallif__ism__contains=soz) | natija.filter(nom__contains=soz)
 
     content = {
         "kitoblar": natija
@@ -81,28 +81,11 @@ def kitob_ochir(request, son):
     return redirect("/hamma_kitoblar/")
 
 
-# vazifa
-
-
-# def hamma_muallif(request):
-#     content = {
-#         "muallif": Muallif.objects.all()
-#     }
-#     return render(request, "vazifa/hamma_muallif.html", content)
-
-
 def tanlangan_muallif(request, ismi):
     content = {
         "x": Muallif.objects.get(ism=ismi)
     }
     return render(request, "vazifa/tanlangan_muallif.html", content)
-
-
-# def hamma_kitob(request):
-#     content = {
-#         "kitoblar": Kitob.objects.all()
-#     }
-#     return render(request, "vazifa/hamma_kitoblar.html", content)
 
 
 def kitob(request, son):
@@ -112,15 +95,70 @@ def kitob(request, son):
     return render(request, "vazifa/kitob.html", content)
 
 
-# def hamma_record(request):
-#     content = {
-#         "record": Record.objects.all()
-#     }
-#     return render(request, "vazifa/hamma_record.html", content)
-
-
 def tirik_muallif(request):
     content = {
-        "muallif": Muallif.objects.filter(tirik=True)
+        "mualliflar": Muallif.objects.filter(tirik=True)
     }
     return render(request, "vazifa/tirik_muallif.html", content)
+
+
+def sahifa_kop_kitob(request):
+    content = {
+        "kitoblar": Kitob.objects.order_by("-sahifa")[:3]
+    }
+    return render(request, "vazifa/sahifa_kop_kitob.html", content)
+
+
+def kitobi_kop_muallif(request):
+    content = {
+        "mualliflar": Muallif.objects.order_by("-kitoblar_soni")[:3]
+    }
+    return render(request, "vazifa/kitobi_kop_muallif.html", content)
+
+
+def record_tartiblash(request):
+    content = {
+        "recordlar": Record.objects.order_by("-olingan_sana")[:3]
+    }
+    return render(request, "vazifa/record_tartiblash.html", content)
+
+
+def tirik_muallif_kitob(request):
+    content = {
+        "kitoblar": Kitob.objects.filter(muallif__tirik=True)
+    }
+    return render(request, "vazifa/tirik_muallif_kitob.html", content)
+
+def badiiy_kitoblar(request):
+    content = {
+        "kitoblar": Kitob.objects.filter(janr="Badiiy")
+    }
+    return render(request, "vazifa/badiiy_kitoblar.html", content)
+
+
+def eng_yoshi_katta_muallif(request):
+    content = {
+        "mualliflar": Muallif.objects.order_by("tugulgan_kun")[:3]
+    }
+    return render(request, "vazifa/eng_yoshi_katta_muallif.html", content)
+
+
+def kitob_muallif(request):
+    content = {
+        "kitoblar": Kitob.objects.filter(muallif__kitoblar_soni__lt=10)
+    }
+    return render(request, "vazifa/kitob_muallif.html", content)
+
+
+def tanlangan_record(request, son):
+    content = {
+        "record": Record.objects.get(id=son)
+    }
+    return render(request, "vazifa/tanlangan_record.html", content)
+
+
+def bitiruvchi_talaba_record(request):
+    content = {
+        "record": Record.objects.filter(talaba__kurs=4)
+    }
+    return render(request, "vazifa/bitiruvchi_talaba_record.html", content)

@@ -19,6 +19,27 @@ urlpatterns = [
     path('books/<int:son>/', kitob),
     path('hamma_recordlar/', hamma_record),
     path('hamma_talabalar/', hamma_talabalar),
+    path('tirik_mualliflar/', tirik_muallif),
+    path('sahifa_kop_kitob/', sahifa_kop_kitob),
+    path('kitobi_kop_muallif/', kitobi_kop_muallif),
+    path('record_tartiblash/', record_tartiblash),
+    path('tirik_muallif_kitob/', tirik_muallif_kitob),
+    path('badiiy_kitoblar/', badiiy_kitoblar),
+    path('eng_yoshi_katta_muallif/', eng_yoshi_katta_muallif),
+    path('kitob_muallif/', kitob_muallif),
+    path('tanlangan_record/<int:son>/', tanlangan_record),
+    path('bitiruvchi_talaba_record/', bitiruvchi_talaba_record),
+
+
+
+
+
+
+
+
+
+
+
 
     # mashq
 
