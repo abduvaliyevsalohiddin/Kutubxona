@@ -42,12 +42,19 @@ def hamma_talabalar(request):
     }
     return render(request, "mashq/hamma_talabalar.html", content)
 
+def talaba_ochir(request, son):
+    Talaba.objects.get(id=son).delete()
+    return redirect("/hamma_talabalar/")
 
 def hamma_muallif(request):
     content = {
         "muallif": Muallif.objects.all()
     }
     return render(request, "vazifa/hamma_muallif.html", content)
+
+def muallif_ochir(request, son):
+    Muallif.objects.get(id=son).delete()
+    return redirect("/hamma_muallif/")
 
 
 def hamma_kitob(request):
@@ -76,9 +83,7 @@ def hamma_record(request):
 
 # mashq -- 15-10-2023
 
-def talaba_ochir(request, son):
-    Talaba.objects.get(id=son).delete()
-    return redirect("/hamma_talabalar/")
+
 
 
 def kitob_ochir(request, son):
@@ -167,3 +172,4 @@ def bitiruvchi_talaba_record(request):
         "record": Record.objects.filter(talaba__kurs=4)
     }
     return render(request, "vazifa/bitiruvchi_talaba_record.html", content)
+
