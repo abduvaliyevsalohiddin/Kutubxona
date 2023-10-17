@@ -15,7 +15,9 @@
     {% for m in record %}
     <br>
     <h1>{{m}}</h1>
-
+    <a href="/record_ochir/{{m.id}}/">
+        <button>Delete</button>
+    </a>
     {% endfor %}
 </body>
 </html>

@@ -47,14 +47,19 @@ def talaba_ochir(request, son):
     return redirect("/hamma_talabalar/")
 
 def hamma_muallif(request):
+    soz = request.GET.get("qidirish_sozi")
+    natija = Muallif.objects.all()
+    if soz:
+        natija = natija.filter(ism__contains=soz)
     content = {
-        "muallif": Muallif.objects.all()
+        "mualliflar": natija
     }
     return render(request, "vazifa/hamma_muallif.html", content)
 
+
 def muallif_ochir(request, son):
     Muallif.objects.get(id=son).delete()
-    return redirect("/hamma_muallif/")
+    return redirect("/hamma_mualliflar/")
 
 
 def hamma_kitob(request):
@@ -80,6 +85,9 @@ def hamma_record(request):
     }
     return render(request, "vazifa/hamma_record.html", content)
 
+def record_ochir(request, son):
+    Record.objects.get(id=son).delete()
+    return redirect("/hamma_recordlar/")
 
 # mashq -- 15-10-2023
 
