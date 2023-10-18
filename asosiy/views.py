@@ -87,7 +87,6 @@ def hamma_kitob(request):
             sahifa=request.POST.get("sahifa"),
             muallif=Muallif.objects.get(id=request.POST.get("muallif")),
         )
-
     soz = request.GET.get("qidirish_sozi")
     natija = Kitob.objects.all()
     if soz:
@@ -101,13 +100,22 @@ def hamma_kitob(request):
 
 
 def hamma_record(request):
+    if request.method == 'POST':
+        Record.objects.create(
+            talaba=Talaba.objects.get(id=request.POST.get("talaba")),
+            kitob=Kitob.objects.get(id=request.POST.get("kitob")),
+            kutubxonachi=Kutubxonachi.objects.get(id=request.POST.get("kutubxonachi"))
+        )
     soz = request.GET.get("qidirish_sozi")
     natija = Record.objects.all()
     if soz:
         natija = natija.filter(talaba__ism__contains=soz)
 
     content = {
-        "record": natija
+        "record": natija,
+        "talabalar": Talaba.objects.all(),
+        "kitoblar": Kitob.objects.all(),
+        "kutubxonachilar": Kutubxonachi.objects.all()
     }
     return render(request, "mashq/hamma_record.html", content)
 

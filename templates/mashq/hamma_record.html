@@ -5,19 +5,55 @@
     <title>Hamma recordlar</title>
 </head>
 <body>
-    <form method="get">
-        <input type="text" placeholder="Talaba ismini kiriting kiriting" name="qidirish_sozi">
-        <button>Qidirish</button>
-    </form>
+<form method="get">
+    <input type="text" placeholder="Talaba ismini kiriting kiriting" name="qidirish_sozi">
+    <button>Qidirish</button>
+</form>
 <h1>Tizimdagi hamma recordlar ro'yhati </h1>
-    <br>
-    <hr>
-    {% for m in record %}
-    <br>
-    <h1>{{m}}</h1>
-    <a href="/record_ochir/{{m.id}}/">
-        <button>Delete</button>
-    </a>
-    {% endfor %}
+
+<br>
+<hr>
+{% for m in record %}
+<br>
+<h1>{{m}}</h1>
+<a href="/record_ochir/{{m.id}}/">
+    <button>Delete</button>
+</a>
+{% endfor %}
+
+
+    <h1>Yangi record qoshish</h1>
+    <form method="post">{% csrf_token %}
+        <label>Talaba:</label>
+        <select name="talaba">
+            {% for talaba in talabalar %}
+            <option value="{{talaba.id}}">{{talaba.ism}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label>Kitob:</label>
+        <select name="kitob">
+            {% for kitob in kitoblar %}
+            <option value="{{kitob.id}}">{{kitob.nom}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label>Kutubxonachi:</label>
+        <select name="kutubxonachi">
+            {% for kutubxonachi in kutubxonachilar %}
+            <option value="{{kutubxonachi.id}}">{{kutubxonachi.ism}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+
+        <br>
+        <br>
+        <label>Qo'shish:</label>
+        <button>Qo'shish</button>
+    </form>
+
 </body>
 </html>
