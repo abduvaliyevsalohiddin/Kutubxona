@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form method="get">
+        <input type="text" placeholder="Talaba ismini kiriting kiriting" name="qidirish_sozi">
+        <button>Qidirish</button>
+    </form>
+    <h1>Tizimdagi hamma kutubxonachilar ro'yhati </h1>
+    <br>
+    <hr>
+    {% for kutubxonachi in kutubxonachilar %}
+    <br>
+    <h1>{{kutubxonachi}}</h1>
+    <a href="/kutubxonachi_ochir/{{kutubxonachi.id}}/">
+        <button>Delete</button>
+    </a>
+    {% endfor %}
+
+    <br>
+    <hr>
+    <br>
+    <h1>Yangi kutubxonachi qoshish</h1>
+    <form method="post">{% csrf_token %}
+        <label>Ism : </label>
+        <input type="text" placeholder="Ism yozing" name="ism">
+        <br>
+        <br>
+        <label>Ish vaqti :</label>
+        <select name="ish_vaqti" >
+            {% for i in soat %}
+            <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+
+
+        <button>Qo'shish</button>
+    </form>
+
+</body>
+</html>

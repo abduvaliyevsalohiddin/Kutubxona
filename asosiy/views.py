@@ -214,3 +214,31 @@ def bitiruvchi_talaba_record(request):
         "record": Record.objects.filter(talaba__kurs=4)
     }
     return render(request, "vazifa/bitiruvchi_talaba_record.html", content)
+
+
+def hamma_kutubxonachilar(request):
+    if request.method == 'POST':
+        Kutubxonachi.objects.create(
+            ism=request.POST.get("ism"),
+            ish_vaqti=request.POST.get("ish_vaqti"),
+        )
+
+    soz = request.GET.get("qidirish_sozi")
+    natija = Kutubxonachi.objects.all()
+    if soz:
+        natija = natija.filter(ism__contains=soz)
+
+    soat = []
+    for i in range(25):
+        soat.append(i)
+
+    content = {
+        "kutubxonachilar": natija,
+        "soat": soat
+    }
+    return render(request, "mashq/hamma_kutubxonachilar.html", content)
+
+
+def kutubxonachi_ochir(request, son):
+    Kutubxonachi.objects.get(id=son).delete()
+    return redirect("/hamma_kutubxonachilar/")
