@@ -55,6 +55,15 @@ def talaba_ochir(request, son):
 
 
 def hamma_muallif(request):
+    if request.method == 'POST':
+        Muallif.objects.create(
+            ism=request.POST.get("ism"),
+            jins=request.POST.get("jins"),
+            tugulgan_kun=request.POST.get("tugulgan_kun"),
+            kitoblar_soni=request.POST.get("kitoblar_soni"),
+            tirik=request.POST.get("tirik") == "on",
+        )
+
     soz = request.GET.get("qidirish_sozi")
     natija = Muallif.objects.all()
     if soz:
@@ -100,7 +109,6 @@ def record_ochir(request, son):
 
 
 # mashq -- 15-10-2023
-
 
 def kitob_ochir(request, son):
     Kitob.objects.get(id=son).delete()

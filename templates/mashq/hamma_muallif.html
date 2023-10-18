@@ -9,15 +9,48 @@
         <input type="text" placeholder="Muallif ismini kiriting" name="qidirish_sozi">
         <button>Qidirish</button>
     </form>
-<h1>Tizimdagi hamma mualliflar ro'yhati </h1>
+    <h1>Tizimdagi hamma mualliflar ro'yhati </h1>
     <br>
     <hr>
     {% for muallif in mualliflar %}
-    <br>
-    <h1>{{muallif}}</h1>
-    <a href="/muallif_ochir/{{muallif.id}}/">
-        <button>Delete</button>
-    </a>
+        <br>
+        <h1>{{muallif}}</h1>
+        <a href="/muallif_ochir/{{muallif.id}}/">
+            <button>Delete</button>
+        </a>
     {% endfor %}
+
+    <br>
+    <hr>
+    <br>
+
+    <h1>Yangi muallif qoshish</h1>
+    <form method="post">{% csrf_token %}
+        <label>Ism:</label>
+        <input type="text" placeholder="Ism yozing" name="ism">
+        <br>
+        <br>
+         <label>Jinsi:</label>
+        <select name="jins" >
+            <option value="Erkak">Erkak</option>
+            <option value="Ayol">Ayol</option>
+        </select>
+        <br>
+        <br>
+        <label>Tug'ilgan sana:</label>
+        <input type="date" placeholder="tugulgan kunini yozing" name="tugulgan_kun">
+        <br>
+        <br>
+        <label>Kitoblari soni:</label>
+        <input type="number" placeholder="kitoblar sonini  yozing" name="kitoblar_soni">
+        <br>
+        <br>
+        <label>Tirik</label>
+        <input type="checkbox" name="tirik">
+        <button>Qo'shish</button>
+    </form>
+    <br>
+    <br>
+
 </body>
 </html>
