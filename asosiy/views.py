@@ -80,13 +80,22 @@ def muallif_ochir(request, son):
 
 
 def hamma_kitob(request):
+    if request.method == 'POST':
+        Kitob.objects.create(
+            nom=request.POST.get("nom"),
+            janr=request.POST.get("janr"),
+            sahifa=request.POST.get("sahifa"),
+            muallif=Muallif.objects.get(id=request.POST.get("muallif")),
+        )
+
     soz = request.GET.get("qidirish_sozi")
     natija = Kitob.objects.all()
     if soz:
         natija = natija.filter(muallif__ism__contains=soz) | natija.filter(nom__contains=soz)
 
     content = {
-        "kitoblar": natija
+        "kitoblar": natija,
+        "mualliflar": Muallif.objects.all()
     }
     return render(request, "mashq/hamma_kitoblar.html", content)
 
