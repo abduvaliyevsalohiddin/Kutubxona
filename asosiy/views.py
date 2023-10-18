@@ -33,6 +33,12 @@ def kitob(request, son):
 
 
 def hamma_talabalar(request):
+    if request.method == 'POST':
+        ism = request.POST.get("ism")
+        kurs = request.POST.get("kurs")
+        kitob_soni = request.POST.get("kitob_soni")
+        Talaba(ism=ism, kurs=kurs, kitob_soni=kitob_soni).save()
+        return redirect("/hamma_talabalar/")
     soz = request.GET.get("qidirish_sozi")
     natija = Talaba.objects.all()
     if soz:
@@ -42,9 +48,11 @@ def hamma_talabalar(request):
     }
     return render(request, "mashq/hamma_talabalar.html", content)
 
+
 def talaba_ochir(request, son):
     Talaba.objects.get(id=son).delete()
     return redirect("/hamma_talabalar/")
+
 
 def hamma_muallif(request):
     soz = request.GET.get("qidirish_sozi")
@@ -54,7 +62,7 @@ def hamma_muallif(request):
     content = {
         "mualliflar": natija
     }
-    return render(request, "vazifa/hamma_muallif.html", content)
+    return render(request, "mashq/hamma_muallif.html", content)
 
 
 def muallif_ochir(request, son):
@@ -71,27 +79,27 @@ def hamma_kitob(request):
     content = {
         "kitoblar": natija
     }
-    return render(request, "vazifa/hamma_kitoblar.html", content)
+    return render(request, "mashq/hamma_kitoblar.html", content)
 
 
 def hamma_record(request):
     soz = request.GET.get("qidirish_sozi")
     natija = Record.objects.all()
     if soz:
-        natija = natija.filter(talaba__ism__contains = soz)
+        natija = natija.filter(talaba__ism__contains=soz)
 
     content = {
         "record": natija
     }
-    return render(request, "vazifa/hamma_record.html", content)
+    return render(request, "mashq/hamma_record.html", content)
+
 
 def record_ochir(request, son):
     Record.objects.get(id=son).delete()
     return redirect("/hamma_recordlar/")
 
+
 # mashq -- 15-10-2023
-
-
 
 
 def kitob_ochir(request, son):
@@ -147,6 +155,7 @@ def tirik_muallif_kitob(request):
     }
     return render(request, "vazifa/tirik_muallif_kitob.html", content)
 
+
 def badiiy_kitoblar(request):
     content = {
         "kitoblar": Kitob.objects.filter(janr="Badiiy")
@@ -180,4 +189,3 @@ def bitiruvchi_talaba_record(request):
         "record": Record.objects.filter(talaba__kurs=4)
     }
     return render(request, "vazifa/bitiruvchi_talaba_record.html", content)
-

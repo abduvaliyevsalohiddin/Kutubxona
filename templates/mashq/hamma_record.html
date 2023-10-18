@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hamma recordlar</title>
+</head>
+<body>
+    <form method="get">
+        <input type="text" placeholder="Talaba ismini kiriting kiriting" name="qidirish_sozi">
+        <button>Qidirish</button>
+    </form>
+<h1>Tizimdagi hamma recordlar ro'yhati </h1>
+    <br>
+    <hr>
+    {% for m in record %}
+    <br>
+    <h1>{{m}}</h1>
+    <a href="/record_ochir/{{m.id}}/">
+        <button>Delete</button>
+    </a>
+    {% endfor %}
+</body>
+</html>

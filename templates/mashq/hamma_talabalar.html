@@ -22,6 +22,19 @@
     </a>
     {% endfor %}
 
+    <br>
+    <hr>
+    <br>
+
+    <form method="post">{% csrf_token %}
+        <input type="text" placeholder="Ism yozing" name="ism">
+        <input type="number" placeholder="Kursini yozing" name="kurs">
+        <input type="number" placeholder="Kitoblar sonini yozing" name="kitob_soni">
+        <button>Qo'shish</button>
+    </form>
+
+    <br>
+    <br>
 
 </body>
 </html>

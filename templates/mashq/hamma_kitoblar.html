@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Tizimdagi hamma kitoblar ro'yhati </h1>
+    <br>
+    <hr>
+    <br>
+    <form method="get">
+        <input type="text" placeholder="Ism yoki kitob nomini kiriting" name="qidirish_sozi">
+        <button>Qidirish</button>
+    </form>
+    <br>
+    {% for kitob in kitoblar %}
+    <br>
+    <h1>{{kitob.id}}. {{kitob.nom}}  ({{kitob.muallif.ism}})</h1>
+    <a href="/kitob_ochir/{{kitob.id}}/">
+        <button>Delete</button>
+    </a>
+    {% endfor %}
+</body>
+</html>
