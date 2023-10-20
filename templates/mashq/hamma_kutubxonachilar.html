@@ -16,6 +16,9 @@
     {% for kutubxonachi in kutubxonachilar %}
     <br>
     <h1>{{kutubxonachi}}</h1>
+        <a href="/kutubxonachi_update/{{kutubxonachi.id}}/">
+        <button>Update</button>
+    </a>
     <a href="/kutubxonachi_ochir/{{kutubxonachi.id}}/">
         <button>Delete</button>
     </a>

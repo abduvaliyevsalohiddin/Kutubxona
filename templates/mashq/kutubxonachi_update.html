@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kutubxonachi ma'lumotlarini ozgartirish</title>
+</head>
+<body>
+    <br>
+    <hr>
+    <br>
+    <h1>Yangi kutubxonachi qoshish</h1>
+    <form method="post">{% csrf_token %}
+        <label>Ism : </label>
+        <input type="text" value="{{kutubxonachi.ism}}" name="ism" disabled>
+        <br>
+        <br>
+        <label>Ish vaqti :</label>
+        <select name="ish_vaqti" >
+            <option value="{{kutubxonachi.ish_vaqti}}">{{kutubxonachi.ish_vaqti}}</option>
+            {% for i in soat %}
+                {% if i != kutubxonachi.ish_vaqti %}
+                    <option value="{{i}}">{{i}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label>Saqlash :</label>
+        <button>Saqlash</button>
+    </form>
+</body>
+</html>

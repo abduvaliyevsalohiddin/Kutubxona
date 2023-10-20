@@ -273,3 +273,21 @@ def kitob_update(request, son):
         "janrlar": ["Badiiy", "Ilmiy", "Hujjatli"]
     }
     return render(request, 'mashq/kitob_update.html', content)
+
+
+def kutubxonachi_update(request, son):
+    if request.method == 'POST':
+        Kutubxonachi.objects.filter(id=son).update(
+            ish_vaqti=request.POST.get("ish_vaqti"),
+        )
+        return redirect('/hamma_kutubxonachilar/')
+
+    soat = []
+    for i in range(25):
+        soat.append(i)
+
+    content = {
+        "kutubxonachi": Kutubxonachi.objects.get(id=son),
+        "soat": soat
+    }
+    return render(request, 'mashq/kutubxonachi_update.html', content)
