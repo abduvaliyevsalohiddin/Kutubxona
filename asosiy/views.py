@@ -242,3 +242,17 @@ def hamma_kutubxonachilar(request):
 def kutubxonachi_ochir(request, son):
     Kutubxonachi.objects.get(id=son).delete()
     return redirect("/hamma_kutubxonachilar/")
+
+
+def talaba_update(request, son):
+    if request.method == 'POST':
+        Talaba.objects.filter(id=son).update(
+            kurs=request.POST.get("kurs"),
+            kitob_soni=request.POST.get("kitob_soni")
+        )
+        return redirect('/hamma_talabalar/')
+
+    content = {
+        "talaba": Talaba.objects.get(id=son)
+    }
+    return render(request, 'mashq/talaba_update.html', content)

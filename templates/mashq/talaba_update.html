@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Talaba ma'lumotlarini ozgartirish</title>
+</head>
+<body>
+<br>
+<br>
+<form method="post">{% csrf_token %}
+    <br>
+    <br>
+    <label>Ism : </label>
+    <input type="text" name="ism" value="{{talaba.ism}}" disabled>
+    <br>
+    <br>
+    <label>Kurs : </label>
+    <input type="number" name="kurs" value="{{talaba.kurs}}">
+    <br>
+    <br>
+    <label>Kitob soni : </label>
+    <input type="number" name="kitob_soni" value="{{talaba.kitob_soni}}">
+    <br>
+    <br>
+    <label>Qo'shish : </label>
+    <button>Qo'shish</button>
+</form>
+
+</body>
+</html>

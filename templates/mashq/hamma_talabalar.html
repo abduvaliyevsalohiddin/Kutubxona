@@ -17,6 +17,9 @@
     {% for talaba in talabalar %}
     <br>
     <h1>{{talaba.id}}.  {{talaba.ism}}</h1>
+    <a href="/talaba_update/{{talaba.id}}/">
+        <button>Update</button>
+    </a>
     <a href="/talaba_ochir/{{talaba.id}}/">
         <button>Delete</button>
     </a>
@@ -27,14 +30,25 @@
     <br>
 
     <form method="post">{% csrf_token %}
+        <h1>Yangi talaba qo'shish</h1>
+        <br>
+        <br>
+        <label>Ism : </label>
         <input type="text" placeholder="Ism yozing" name="ism">
+        <br>
+        <br>
+        <label>Kurs : </label>
         <input type="number" placeholder="Kursini yozing" name="kurs">
+        <br>
+        <br>
+        <label>Kitob soni  : </label>
         <input type="number" placeholder="Kitoblar sonini yozing" name="kitob_soni">
+        <br>
+        <br>
+        <label>Qo'shish : </label>
         <button>Qo'shish</button>
     </form>
 
-    <br>
-    <br>
 
 </body>
 </html>
