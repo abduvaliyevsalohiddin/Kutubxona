@@ -53,4 +53,5 @@ urlpatterns = [
     path('kutubxonachi_ochir/<int:son>/', kutubxonachi_ochir),
     # update malumot
     path('talaba_update/<int:son>/', talaba_update),
+    path('kitob_update/<int:son>/', kitob_update),
 ]

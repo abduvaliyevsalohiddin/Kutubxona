@@ -256,3 +256,20 @@ def talaba_update(request, son):
         "talaba": Talaba.objects.get(id=son)
     }
     return render(request, 'mashq/talaba_update.html', content)
+
+
+def kitob_update(request, son):
+    if request.method == 'POST':
+        Kitob.objects.filter(id=son).update(
+            janr=request.POST.get("janr"),
+            sahifa=request.POST.get("sahifa"),
+            muallif=Muallif.objects.get(id=request.POST.get("muallif"))
+        )
+        return redirect('/hamma_kitoblar/')
+
+    content = {
+        "kitob": Kitob.objects.get(id=son),
+        "mualliflar": Muallif.objects.all(),
+        "janrlar": ["Badiiy", "Ilmiy", "Hujjatli"]
+    }
+    return render(request, 'mashq/kitob_update.html', content)

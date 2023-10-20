@@ -17,6 +17,9 @@
     {% for kitob in kitoblar %}
     <br>
     <h1>{{kitob.id}}. {{kitob.nom}}  ({{kitob.muallif.ism}})</h1>
+    <a href="/kitob_update/{{kitob.id}}/">
+        <button>Update</button>
+    </a>
     <a href="/kitob_ochir/{{kitob.id}}/">
         <button>Delete</button>
     </a>
