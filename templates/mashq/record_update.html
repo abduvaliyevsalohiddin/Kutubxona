@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Record ma'lumotlarini ozgartirish</title>
+</head>
+<body>
+<br>
+<br>
+    <h1>Yangi record qoshish</h1>
+    <form method="post">{% csrf_token %}
+        <label>Talaba:</label>
+        <select name="talaba" disabled>
+            <option value="{{record.talaba.id}}">{{record.talaba.ism}}</option>
+        </select>
+        <br>
+        <br>
+        <label>Kitob:</label>
+        <select name="kitob" disabled>
+            <option value="{{record.kitob.id}}">{{record.kitob.nom}}</option>
+        </select>
+        <br>
+        <br>
+        <label>Kutubxonachi:</label>
+        <select name="kutubxonachi" disabled>
+            <option value="{{record.kutubxonachi.id}}">{{record.kutubxonachi.ism}}</option>
+        </select>
+        <br>
+        <br>
+        <label>Olingan_sana : </label>
+        <input type="date"  name="olingan_sana" value="{{record.olingan_sana}}" disabled>
+        <label> {{record.olingan_sana}}</label>
+        <br>
+        <br>
+        <label>Qaytardi : </label>
+        <input type="checkbox"  name="tirik" value="record.qaytardi" >
+        <br>
+        <br>
+        <label>Qaytarish_sana : </label>
+        <input type="date"  name="qaytarish_sana" value="{{record.qaytarish_sana}}" >
+        <label> {{record.qaytarish_sana}}</label>
+        <br>
+        <br>
+        <label>Saqlash :</label>
+        <button>Saqlash</button>
+    </form>
+</body>
+</html>

@@ -78,6 +78,7 @@ def muallif_ochir(request, son):
     Muallif.objects.get(id=son).delete()
     return redirect("/hamma_mualliflar/")
 
+
 def muallif_update(request, son):
     if request.method == 'POST':
         Muallif.objects.filter(id=son).update(
@@ -127,7 +128,7 @@ def hamma_record(request):
         natija = natija.filter(talaba__ism__contains=soz)
 
     content = {
-        "record": natija,
+        "recordlar": natija,
         "talabalar": Talaba.objects.all(),
         "kitoblar": Kitob.objects.all(),
         "kutubxonachilar": Kutubxonachi.objects.all()
@@ -138,6 +139,20 @@ def hamma_record(request):
 def record_ochir(request, son):
     Record.objects.get(id=son).delete()
     return redirect("/hamma_recordlar/")
+
+
+def record_update(request, son):
+    if request.method == 'POST':
+        Record.objects.filter(id=son).update(
+            qaytardi=request.POST.get("qaytardi") == "on",
+            qaytarish_sana=request.POST.get("qaytarish_sana"),
+        )
+        return redirect('/hamma_recordlar/')
+
+    content = {
+        "record": Record.objects.get(id=son),
+    }
+    return render(request, 'mashq/record_update.html', content)
 
 
 # mashq -- 15-10-2023

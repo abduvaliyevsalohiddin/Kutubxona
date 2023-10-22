@@ -13,10 +13,13 @@
 
 <br>
 <hr>
-{% for m in record %}
+{% for record in recordlar %}
 <br>
-<h1>{{m}}</h1>
-<a href="/record_ochir/{{m.id}}/">
+<h1>{{record}}</h1>
+<a href="/record_update/{{record.id}}/">
+    <button>Update</button>
+</a>
+<a href="/record_ochir/{{record.id}}/">
     <button>Delete</button>
 </a>
 {% endfor %}

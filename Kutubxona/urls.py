@@ -56,4 +56,5 @@ urlpatterns = [
     path('kitob_update/<int:son>/', kitob_update),
     path('kutubxonachi_update/<int:son>/', kutubxonachi_update),
     path('muallif_update/<int:son>/', muallif_update),
+    path('record_update/<int:son>/', record_update),
 ]
