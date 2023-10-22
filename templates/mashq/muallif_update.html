@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Muallif ma'lumotlarini ozgartirish</title>
+</head>
+<body>
+ <h1> Update muallif ({{muallif.ism}})</h1>
+    <form method="post">{% csrf_token %}
+        <label>Ism : </label>
+        <input type="text" value="{{muallif.ism}}" name="ism" disabled>
+        <br>
+        <br>
+        <label>Jinsi : </label>
+        <select name="jins" >
+            <option value="{{ muallif.jins}}"> {{muallif.jins}} </option>
+            {% for i in jins %}
+                {% if i != muallif.jins %}
+                    <option value="{{i}}">{{i}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <br>
+        <br>
+        <label>Tug'ilgan sana : </label>
+        <input type="date"  name="tugulgan_kun">
+        <label> {{muallif.tugulgan_kun}}</label>
+        <br>
+        <br>
+        <label>Kitoblari soni : </label>
+        <input type="number" value="{{muallif.kitoblar_soni}}" name="kitoblar_soni">
+        <br>
+        <br>
+        <label>Tirik : </label>
+        <input type="checkbox"  name="tirik" >
+        <br>
+        <br>
+        <label>Saqlash : </label>
+        <button>Saqlash</button>
+    </form>
+    <br>
+    <br>
+</body>
+</html>

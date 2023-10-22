@@ -78,6 +78,21 @@ def muallif_ochir(request, son):
     Muallif.objects.get(id=son).delete()
     return redirect("/hamma_mualliflar/")
 
+def muallif_update(request, son):
+    if request.method == 'POST':
+        Muallif.objects.filter(id=son).update(
+            jins=request.POST.get("jins"),
+            kitoblar_soni=request.POST.get("kitoblar_soni"),
+            tirik=request.POST.get("tirik") == "on",
+        )
+        return redirect('/hamma_mualliflar/')
+
+    content = {
+        "muallif": Muallif.objects.get(id=son),
+        "jins": ["Erkak", "Ayol"]
+    }
+    return render(request, 'mashq/muallif_update.html', content)
+
 
 def hamma_kitob(request):
     if request.method == 'POST':

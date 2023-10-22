@@ -15,6 +15,9 @@
     {% for muallif in mualliflar %}
         <br>
         <h1>{{muallif}}</h1>
+        <a href="/muallif_update/{{muallif.id}}/">
+            <button>Update</button>
+        </a>
         <a href="/muallif_ochir/{{muallif.id}}/">
             <button>Delete</button>
         </a>
