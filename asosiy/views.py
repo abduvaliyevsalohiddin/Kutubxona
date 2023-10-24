@@ -66,9 +66,23 @@ def talaba_update(request, son):
 
 def hamma_muallif(request):
     if request.method == 'POST':
-        forma = MuallifForm(request.POST)
+        forma = MuallifForm2(request.POST)
         if forma.is_valid():
-            forma.save()
+            data = forma.cleaned_data
+            Muallif.objects.create(
+                ism=data.get("ism"),
+                jins=data.get("jins"),
+                tugulgan_kun=data.get("tugulgan_kun"),
+                kitoblar_soni=data.get("kitoblar_soni"),
+                tirik=data.get("tirik"),
+            )
+
+
+
+    # if request.method == 'POST':
+    #     forma = MuallifForm(request.POST)
+    #     if forma.is_valid():
+    #         forma.save()
 
         # Muallif.objects.create(
         #     ism=request.POST.get("ism"),
@@ -84,7 +98,7 @@ def hamma_muallif(request):
         natija = natija.filter(ism__contains=soz)
     content = {
         "mualliflar": natija,
-        "forma": MuallifForm()
+        "forma": MuallifForm2()
 
     }
     return render(request, "mashq/hamma_muallif.html", content)
