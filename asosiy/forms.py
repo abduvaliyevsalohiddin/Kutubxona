@@ -33,3 +33,9 @@ class MuallifForm2(forms.Form):
     tugulgan_kun = forms.DateField(label="Tugulgan_kun")
     kitoblar_soni = forms.IntegerField(label="Kitoblar_soni", min_value=0)
     tirik = forms.BooleanField(label="Tirik")
+
+
+class RecordForm(forms.ModelForm):
+    class Meta:
+        model = Record
+        fields = "__all__"

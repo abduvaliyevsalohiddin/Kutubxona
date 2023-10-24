@@ -178,11 +178,17 @@ def kitob_update(request, son):
 
 def hamma_record(request):
     if request.method == 'POST':
-        Record.objects.create(
-            talaba=Talaba.objects.get(id=request.POST.get("talaba")),
-            kitob=Kitob.objects.get(id=request.POST.get("kitob")),
-            kutubxonachi=Kutubxonachi.objects.get(id=request.POST.get("kutubxonachi"))
-        )
+        forma = RecordForm(request.POST)
+        if forma.is_valid():
+            forma.save()
+
+
+    # if request.method == 'POST':
+    #     Record.objects.create(
+    #         talaba=Talaba.objects.get(id=request.POST.get("talaba")),
+    #         kitob=Kitob.objects.get(id=request.POST.get("kitob")),
+    #         kutubxonachi=Kutubxonachi.objects.get(id=request.POST.get("kutubxonachi"))
+    #     )
     soz = request.GET.get("qidirish_sozi")
     natija = Record.objects.all()
     if soz:
@@ -192,7 +198,8 @@ def hamma_record(request):
         "recordlar": natija,
         "talabalar": Talaba.objects.all(),
         "kitoblar": Kitob.objects.all(),
-        "kutubxonachilar": Kutubxonachi.objects.all()
+        "kutubxonachilar": Kutubxonachi.objects.all(),
+        "forma": RecordForm()
     }
     return render(request, "mashq/hamma_record.html", content)
 
