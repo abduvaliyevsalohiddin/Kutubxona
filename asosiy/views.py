@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
+from .forms import *
 
 
 def salomlash(request):
@@ -11,40 +12,33 @@ def homepage(request):
     return render(request, "home.html")
 
 
-def hamma_kitoblar(request):
-    content = {
-        "kitoblar": Kitob.objects.all()
-    }
-    return render(request, "kitoblar.html", content)
-
-
-def ayol_mualliflar_kitoblari(request):
-    content = {
-        "kitoblar": Kitob.objects.filter(muallif__jins='Ayol')
-    }
-    return render(request, "mashq/ayollar_kitoblari.html", content)
-
-
-def kitob(request, son):
-    content = {
-        "book": Kitob.objects.get(id=son)
-    }
-    return render(request, "mashq/kitob.html", content)
-
+# Talaba
 
 def hamma_talabalar(request):
     if request.method == 'POST':
-        ism = request.POST.get("ism")
-        kurs = request.POST.get("kurs")
-        kitob_soni = request.POST.get("kitob_soni")
-        Talaba(ism=ism, kurs=kurs, kitob_soni=kitob_soni).save()
+        forma = TalabaForm(request.POST)
+        if forma.is_valid():
+            data = forma.cleaned_data
+            Talaba.objects.create(
+                ism=data.get("ism"),
+                kurs=data.get("kurs"),
+                kitob_soni=data.get("kitob_soni"),
+            )
+
+            # Talaba.objects.create(
+            #     ism=request.POST.get("ism"),
+            #     kurs=request.POST.get("kurs"),
+            #     kitob_soni=request.POST.get("kitob_soni"),
+            # )
+
         return redirect("/hamma_talabalar/")
     soz = request.GET.get("qidirish_sozi")
     natija = Talaba.objects.all()
     if soz:
         natija = natija.filter(ism__contains=soz)
     content = {
-        "talabalar": natija
+        "talabalar": natija,
+        "forma": TalabaForm()
     }
     return render(request, "mashq/hamma_talabalar.html", content)
 
@@ -54,22 +48,44 @@ def talaba_ochir(request, son):
     return redirect("/hamma_talabalar/")
 
 
+def talaba_update(request, son):
+    if request.method == 'POST':
+        Talaba.objects.filter(id=son).update(
+            kurs=request.POST.get("kurs"),
+            kitob_soni=request.POST.get("kitob_soni")
+        )
+        return redirect('/hamma_talabalar/')
+
+    content = {
+        "talaba": Talaba.objects.get(id=son)
+    }
+    return render(request, 'mashq/talaba_update.html', content)
+
+
+# Muallif
+
 def hamma_muallif(request):
     if request.method == 'POST':
-        Muallif.objects.create(
-            ism=request.POST.get("ism"),
-            jins=request.POST.get("jins"),
-            tugulgan_kun=request.POST.get("tugulgan_kun"),
-            kitoblar_soni=request.POST.get("kitoblar_soni"),
-            tirik=request.POST.get("tirik") == "on",
-        )
+        forma = MuallifForm(request.POST)
+        if forma.is_valid():
+            forma.save()
+
+        # Muallif.objects.create(
+        #     ism=request.POST.get("ism"),
+        #     jins=request.POST.get("jins"),
+        #     tugulgan_kun=request.POST.get("tugulgan_kun"),
+        #     kitoblar_soni=request.POST.get("kitoblar_soni"),
+        #     tirik=request.POST.get("tirik") == "on",
+        # )
 
     soz = request.GET.get("qidirish_sozi")
     natija = Muallif.objects.all()
     if soz:
         natija = natija.filter(ism__contains=soz)
     content = {
-        "mualliflar": natija
+        "mualliflar": natija,
+        "forma": MuallifForm()
+
     }
     return render(request, "mashq/hamma_muallif.html", content)
 
@@ -95,14 +111,20 @@ def muallif_update(request, son):
     return render(request, 'mashq/muallif_update.html', content)
 
 
+# Kitob
+
 def hamma_kitob(request):
     if request.method == 'POST':
-        Kitob.objects.create(
-            nom=request.POST.get("nom"),
-            janr=request.POST.get("janr"),
-            sahifa=request.POST.get("sahifa"),
-            muallif=Muallif.objects.get(id=request.POST.get("muallif")),
-        )
+        forma = KitobForm(request.POST)
+        if forma.is_valid():
+            forma.save()
+
+        # Kitob.objects.create(
+        #     nom=request.POST.get("nom"),
+        #     janr=request.POST.get("janr"),
+        #     sahifa=request.POST.get("sahifa"),
+        #     muallif=Muallif.objects.get(id=request.POST.get("muallif")),
+        # )
     soz = request.GET.get("qidirish_sozi")
     natija = Kitob.objects.all()
     if soz:
@@ -110,10 +132,35 @@ def hamma_kitob(request):
 
     content = {
         "kitoblar": natija,
-        "mualliflar": Muallif.objects.all()
+        "mualliflar": Muallif.objects.all(),
+        "forma": KitobForm()
     }
     return render(request, "mashq/hamma_kitoblar.html", content)
 
+
+def kitob_ochir(request, son):
+    Kitob.objects.get(id=son).delete()
+    return redirect("/hamma_kitoblar/")
+
+
+def kitob_update(request, son):
+    if request.method == 'POST':
+        Kitob.objects.filter(id=son).update(
+            janr=request.POST.get("janr"),
+            sahifa=request.POST.get("sahifa"),
+            muallif=Muallif.objects.get(id=request.POST.get("muallif"))
+        )
+        return redirect('/hamma_kitoblar/')
+
+    content = {
+        "kitob": Kitob.objects.get(id=son),
+        "mualliflar": Muallif.objects.all(),
+        "janrlar": ["Badiiy", "Ilmiy", "Hujjatli"]
+    }
+    return render(request, 'mashq/kitob_update.html', content)
+
+
+# Record
 
 def hamma_record(request):
     if request.method == 'POST':
@@ -155,11 +202,75 @@ def record_update(request, son):
     return render(request, 'mashq/record_update.html', content)
 
 
+# Kutubxonachi
+
+def hamma_kutubxonachilar(request):
+    if request.method == 'POST':
+        Kutubxonachi.objects.create(
+            ism=request.POST.get("ism"),
+            ish_vaqti=request.POST.get("ish_vaqti"),
+        )
+
+    soz = request.GET.get("qidirish_sozi")
+    natija = Kutubxonachi.objects.all()
+    if soz:
+        natija = natija.filter(ism__contains=soz)
+
+    soat = []
+    for i in range(25):
+        soat.append(i)
+
+    content = {
+        "kutubxonachilar": natija,
+        "soat": soat
+    }
+    return render(request, "mashq/hamma_kutubxonachilar.html", content)
+
+
+def kutubxonachi_ochir(request, son):
+    Kutubxonachi.objects.get(id=son).delete()
+    return redirect("/hamma_kutubxonachilar/")
+
+
+def kutubxonachi_update(request, son):
+    if request.method == 'POST':
+        Kutubxonachi.objects.filter(id=son).update(
+            ish_vaqti=request.POST.get("ish_vaqti"),
+        )
+        return redirect('/hamma_kutubxonachilar/')
+
+    soat = []
+    for i in range(25):
+        soat.append(i)
+
+    content = {
+        "kutubxonachi": Kutubxonachi.objects.get(id=son),
+        "soat": soat
+    }
+    return render(request, 'mashq/kutubxonachi_update.html', content)
+
+
 # mashq -- 15-10-2023
 
-def kitob_ochir(request, son):
-    Kitob.objects.get(id=son).delete()
-    return redirect("/hamma_kitoblar/")
+def hamma_kitoblar(request):
+    content = {
+        "kitoblar": Kitob.objects.all()
+    }
+    return render(request, "kitoblar.html", content)
+
+
+def ayol_mualliflar_kitoblari(request):
+    content = {
+        "kitoblar": Kitob.objects.filter(muallif__jins='Ayol')
+    }
+    return render(request, "mashq/ayollar_kitoblari.html", content)
+
+
+def kitob(request, son):
+    content = {
+        "book": Kitob.objects.get(id=son)
+    }
+    return render(request, "mashq/kitob.html", content)
 
 
 def tanlangan_muallif(request, ismi):
@@ -244,80 +355,3 @@ def bitiruvchi_talaba_record(request):
         "record": Record.objects.filter(talaba__kurs=4)
     }
     return render(request, "vazifa/bitiruvchi_talaba_record.html", content)
-
-
-def hamma_kutubxonachilar(request):
-    if request.method == 'POST':
-        Kutubxonachi.objects.create(
-            ism=request.POST.get("ism"),
-            ish_vaqti=request.POST.get("ish_vaqti"),
-        )
-
-    soz = request.GET.get("qidirish_sozi")
-    natija = Kutubxonachi.objects.all()
-    if soz:
-        natija = natija.filter(ism__contains=soz)
-
-    soat = []
-    for i in range(25):
-        soat.append(i)
-
-    content = {
-        "kutubxonachilar": natija,
-        "soat": soat
-    }
-    return render(request, "mashq/hamma_kutubxonachilar.html", content)
-
-
-def kutubxonachi_ochir(request, son):
-    Kutubxonachi.objects.get(id=son).delete()
-    return redirect("/hamma_kutubxonachilar/")
-
-
-def talaba_update(request, son):
-    if request.method == 'POST':
-        Talaba.objects.filter(id=son).update(
-            kurs=request.POST.get("kurs"),
-            kitob_soni=request.POST.get("kitob_soni")
-        )
-        return redirect('/hamma_talabalar/')
-
-    content = {
-        "talaba": Talaba.objects.get(id=son)
-    }
-    return render(request, 'mashq/talaba_update.html', content)
-
-
-def kitob_update(request, son):
-    if request.method == 'POST':
-        Kitob.objects.filter(id=son).update(
-            janr=request.POST.get("janr"),
-            sahifa=request.POST.get("sahifa"),
-            muallif=Muallif.objects.get(id=request.POST.get("muallif"))
-        )
-        return redirect('/hamma_kitoblar/')
-
-    content = {
-        "kitob": Kitob.objects.get(id=son),
-        "mualliflar": Muallif.objects.all(),
-        "janrlar": ["Badiiy", "Ilmiy", "Hujjatli"]
-    }
-    return render(request, 'mashq/kitob_update.html', content)
-
-
-def kutubxonachi_update(request, son):
-    if request.method == 'POST':
-        Kutubxonachi.objects.filter(id=son).update(
-            ish_vaqti=request.POST.get("ish_vaqti"),
-        )
-        return redirect('/hamma_kutubxonachilar/')
-
-    soat = []
-    for i in range(25):
-        soat.append(i)
-
-    content = {
-        "kutubxonachi": Kutubxonachi.objects.get(id=son),
-        "soat": soat
-    }
-    return render(request, 'mashq/kutubxonachi_update.html', content)

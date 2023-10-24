@@ -12,8 +12,6 @@ urlpatterns = [
     path('books/<int:son>/', kitob),
     path('hamma_kutubxonachilar/', hamma_kutubxonachilar),
 
-
-
     # vazifa
 
     path('hamma_mualliflar/', hamma_muallif),
@@ -33,17 +31,6 @@ urlpatterns = [
     path('tanlangan_record/<int:son>/', tanlangan_record),
     path('bitiruvchi_talaba_record/', bitiruvchi_talaba_record),
 
-
-
-
-
-
-
-
-
-
-
-
     # mashq
 
     path('talaba_ochir/<int:son>/', talaba_ochir),
@@ -51,10 +38,13 @@ urlpatterns = [
     path('muallif_ochir/<int:son>/', muallif_ochir),
     path('record_ochir/<int:son>/', record_ochir),
     path('kutubxonachi_ochir/<int:son>/', kutubxonachi_ochir),
+
     # update malumot
+
     path('talaba_update/<int:son>/', talaba_update),
     path('kitob_update/<int:son>/', kitob_update),
     path('kutubxonachi_update/<int:son>/', kutubxonachi_update),
     path('muallif_update/<int:son>/', muallif_update),
     path('record_update/<int:son>/', record_update),
+
 ]

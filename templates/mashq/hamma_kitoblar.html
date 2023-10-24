@@ -31,31 +31,34 @@
 
     <h1>Yangi kitob qoshish</h1>
     <form method="post">{% csrf_token %}
-        <label>Nomi:</label>
-        <input type="text" placeholder="Nomini yozing" name="nom">
-        <br>
-        <br>
-        <label>janr:</label>
-        <select name="janr" >
-            <option value="Badiiy">Badiiy</option>
-            <option value="Ilmiy">Ilmiy</option>
-            <option value="Jangari">Jangari</option>
-        </select>
-        <br>
-        <br>
-        <label>Sahifa:</label>
-        <input type="number" placeholder="sahifasini yozing" name="sahifa">
-        <br>
-        <br>
-        <label>Muallif:</label>
-        <select name="muallif" >
-            {% for muallif in mualliflar %}
-            <option value="{{muallif.id}}">{{muallif.ism}}</option>
-            {% endfor %}
-        </select>
-        <br>
-        <br>
-        <label>Qo'shish:</label>
+        {{ forma.as_p }}
+
+
+<!--        <label>Nomi:</label>-->
+<!--        <input type="text" placeholder="Nomini yozing" name="nom">-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label>janr:</label>-->
+<!--        <select name="janr" >-->
+<!--            <option value="Badiiy">Badiiy</option>-->
+<!--            <option value="Ilmiy">Ilmiy</option>-->
+<!--            <option value="Jangari">Jangari</option>-->
+<!--        </select>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label>Sahifa:</label>-->
+<!--        <input type="number" placeholder="sahifasini yozing" name="sahifa">-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label>Muallif:</label>-->
+<!--        <select name="muallif" >-->
+<!--            {% for muallif in mualliflar %}-->
+<!--            <option value="{{muallif.id}}">{{muallif.ism}}</option>-->
+<!--            {% endfor %}-->
+<!--        </select>-->
+<!--        <br>-->
+<!--        <br>-->
+<!--        <label>Qo'shish:</label>-->
         <button>Qo'shish</button>
     </form>
 
