@@ -227,10 +227,20 @@ def record_update(request, son):
 
 def hamma_kutubxonachilar(request):
     if request.method == 'POST':
-        Kutubxonachi.objects.create(
-            ism=request.POST.get("ism"),
-            ish_vaqti=request.POST.get("ish_vaqti"),
-        )
+        forma = KutubxonachiForm(request.POST)
+        if forma.is_valid():
+            data = forma.cleaned_data
+            Kutubxonachi.objects.create(
+                ism=data.get("ism"),
+                ish_vaqti=data.get("ish_vaqti"),
+            )
+
+
+    # if request.method == 'POST':
+    #     Kutubxonachi.objects.create(
+    #         ism=request.POST.get("ism"),
+    #         ish_vaqti=request.POST.get("ish_vaqti"),
+    #     )
 
     soz = request.GET.get("qidirish_sozi")
     natija = Kutubxonachi.objects.all()
@@ -243,7 +253,8 @@ def hamma_kutubxonachilar(request):
 
     content = {
         "kutubxonachilar": natija,
-        "soat": soat
+        "soat": soat,
+        "forma": KutubxonachiForm
     }
     return render(request, "mashq/hamma_kutubxonachilar.html", content)
 

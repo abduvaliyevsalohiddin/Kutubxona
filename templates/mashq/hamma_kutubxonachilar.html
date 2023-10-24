@@ -16,7 +16,7 @@
     {% for kutubxonachi in kutubxonachilar %}
     <br>
     <h1>{{kutubxonachi}}</h1>
-        <a href="/kutubxonachi_update/{{kutubxonachi.id}}/">
+    <a href="/kutubxonachi_update/{{kutubxonachi.id}}/">
         <button>Update</button>
     </a>
     <a href="/kutubxonachi_ochir/{{kutubxonachi.id}}/">
@@ -29,17 +29,18 @@
     <br>
     <h1>Yangi kutubxonachi qoshish</h1>
     <form method="post">{% csrf_token %}
-        <label>Ism : </label>
-        <input type="text" placeholder="Ism yozing" name="ism">
-        <br>
-        <br>
-        <label>Ish vaqti :</label>
-        <select name="ish_vaqti" >
-            {% for i in soat %}
-            <option value="{{i}}">{{i}}</option>
-            {% endfor %}
-        </select>
+        {{ forma.as_p }}
 
+        <!--        <label>Ism : </label>-->
+        <!--        <input type="text" placeholder="Ism yozing" name="ism">-->
+        <!--        <br>-->
+        <!--        <br>-->
+        <!--        <label>Ish vaqti :</label>-->
+        <!--        <select name="ish_vaqti" >-->
+        <!--            {% for i in soat %}-->
+        <!--            <option value="{{i}}">{{i}}</option>-->
+        <!--            {% endfor %}-->
+        <!--        </select>-->
 
         <button>Qo'shish</button>
     </form>

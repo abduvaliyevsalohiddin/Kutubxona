@@ -39,3 +39,8 @@ class RecordForm(forms.ModelForm):
     class Meta:
         model = Record
         fields = "__all__"
+
+
+class KutubxonachiForm(forms.Form):
+    ism = forms.CharField(label="Ism")
+    ish_vaqti = forms.IntegerField(label="ish_vaqti", min_value=0, max_value=24)
