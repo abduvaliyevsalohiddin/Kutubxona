@@ -6,12 +6,13 @@ from .models import *
 
 @admin.register(Muallif)
 class MuallifAdmin(admin.ModelAdmin):
+    # vazifa uchun o'zgartirish
     list_display = ["id", "ism", "jins", "tugulgan_kun", "tirik", "kitoblar_soni"]
-    list_display_links = ["id", "ism"]
-    list_editable = ["tirik", "kitoblar_soni"]
-    search_fields = ["id", "ism", "tugulgan_kun"]
-    search_help_text = "Id , ism va tugulgan kun ustunlari bo'yicha qidiring"
-    list_filter = ["tirik"]
+    list_display_links = ["id", "ism"]  # links --> id , ism
+    list_editable = ["tirik", "kitoblar_soni"]  # editable --> kitoblar soni va tirikligi
+    search_fields = ["ism"]
+    search_help_text = "Ism ustunlari bo'yicha qidiring"
+    list_filter = ["tirik"]  # filter --> tirik
     ordering = ["id"]
     date_hierarchy = "tugulgan_kun"
     list_per_page = 10
