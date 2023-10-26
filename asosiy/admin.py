@@ -28,10 +28,19 @@ class KitobAdmin(admin.ModelAdmin):
     autocomplete_fields = ["muallif"]
 
 
+@admin.register(Kutubxonachi)
+class KutubxonachiAdmin(admin.ModelAdmin):
+    list_display = ["id", "ism", "ish_vaqti"]
+    list_display_links = ["id", "ism"]
+    search_fields = ["ism"]
+    search_help_text = "Ism ustunlari bo'yicha qidiring"
+    list_filter = ["ish_vaqti"]
+
+
 admin.site.register(Talaba)
 # admin.site.register(Muallif)
 # admin.site.register(Kitob)
-admin.site.register(Kutubxonachi)
+# admin.site.register(Kutubxonachi)
 admin.site.register(Record)
 
 # admin.site.unregister(Group)
