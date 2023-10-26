@@ -20,7 +20,7 @@ class Talaba(models.Model):
     kitob_soni = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return f"{self.ism} --> {self.kurs} - kurs  --> {self.kitob_soni} ta kitob"
+        return f"{self.ism}"
 
 
 class Muallif(models.Model):
@@ -31,7 +31,7 @@ class Muallif(models.Model):
     tirik = models.BooleanField()
 
     def __str__(self):
-        return f"{self.ism} --> {self.tugulgan_kun} "
+        return f"{self.ism}"
 
 
 class Kitob(models.Model):
@@ -41,7 +41,7 @@ class Kitob(models.Model):
     muallif = models.ForeignKey(Muallif, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.nom} --> {self.janr} --> {self.sahifa}"
+        return f"{self.nom}"
 
 
 class Kutubxonachi(models.Model):
@@ -49,7 +49,7 @@ class Kutubxonachi(models.Model):
     ish_vaqti = models.PositiveSmallIntegerField(verbose_name=" necha soat")
 
     def __str__(self):
-        return f"{self.ism} --> {self.ish_vaqti} soat "
+        return f"{self.ism}"
 
 
 class Record(models.Model):

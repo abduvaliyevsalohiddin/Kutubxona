@@ -38,11 +38,30 @@ class KutubxonachiAdmin(admin.ModelAdmin):
     list_filter = ["ish_vaqti"]
 
 
-admin.site.register(Talaba)
+@admin.register(Talaba)
+class TalabaAdmin(admin.ModelAdmin):
+    list_display = ["id", "ism", "kurs", "kitob_soni"]
+    list_display_links = ["id", "ism"]
+    search_fields = ["ism"]
+    search_help_text = "Ism ustunlari bo'yicha qidiring"
+    list_filter = ["kurs"]
+
+
+@admin.register(Record)
+class RecordAdmin(admin.ModelAdmin):
+    list_display = ["id", "talaba", "kitob", "kutubxonachi", "olingan_sana", "qaytardi", "qaytarish_sana"]
+    list_display_links = ["id", "talaba"]
+    search_fields = ["id", "talaba__ism", "kitob__nom", "kutubxonachi__ism"]
+    search_help_text = "Id , talaba ismi, kitob nomi va kutubxonachi ismi ustunlari bo'yicha qidiring"
+    list_filter = ["qaytardi"]
+    autocomplete_fields = ["talaba", "kitob", "kutubxonachi"]
+
+
+# admin.site.register(Talaba)
 # admin.site.register(Muallif)
 # admin.site.register(Kitob)
 # admin.site.register(Kutubxonachi)
-admin.site.register(Record)
+# admin.site.register(Record)
 
 # admin.site.unregister(Group)
 # admin.site.unregister(User)
