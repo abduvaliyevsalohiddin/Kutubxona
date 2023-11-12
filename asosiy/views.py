@@ -1,5 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+
 from .models import *
 from .forms import *
 
@@ -9,7 +11,9 @@ def salomlash(request):
 
 
 def homepage(request):
-    return render(request, "home.html")
+    if request.user.is_authenticated:
+        return render(request, "home.html")
+    return redirect("/")
 
 
 # Talaba
@@ -77,20 +81,18 @@ def hamma_muallif(request):
                 tirik=data.get("tirik"),
             )
 
-
-
     # if request.method == 'POST':
     #     forma = MuallifForm(request.POST)
     #     if forma.is_valid():
     #         forma.save()
 
-        # Muallif.objects.create(
-        #     ism=request.POST.get("ism"),
-        #     jins=request.POST.get("jins"),
-        #     tugulgan_kun=request.POST.get("tugulgan_kun"),
-        #     kitoblar_soni=request.POST.get("kitoblar_soni"),
-        #     tirik=request.POST.get("tirik") == "on",
-        # )
+    # Muallif.objects.create(
+    #     ism=request.POST.get("ism"),
+    #     jins=request.POST.get("jins"),
+    #     tugulgan_kun=request.POST.get("tugulgan_kun"),
+    #     kitoblar_soni=request.POST.get("kitoblar_soni"),
+    #     tirik=request.POST.get("tirik") == "on",
+    # )
 
     soz = request.GET.get("qidirish_sozi")
     natija = Muallif.objects.all()
@@ -182,7 +184,6 @@ def hamma_record(request):
         if forma.is_valid():
             forma.save()
 
-
     # if request.method == 'POST':
     #     Record.objects.create(
     #         talaba=Talaba.objects.get(id=request.POST.get("talaba")),
@@ -234,7 +235,6 @@ def hamma_kutubxonachilar(request):
                 ism=data.get("ism"),
                 ish_vaqti=data.get("ish_vaqti"),
             )
-
 
     # if request.method == 'POST':
     #     Kutubxonachi.objects.create(
@@ -387,3 +387,21 @@ def bitiruvchi_talaba_record(request):
         "record": Record.objects.filter(talaba__kurs=4)
     }
     return render(request, "vazifa/bitiruvchi_talaba_record.html", content)
+
+
+def login_view(requests):
+    if requests.method == 'POST':
+        user = authenticate(
+            username=requests.POST.get("l"),
+            password=requests.POST.get("p")
+        )
+        if user is None:
+            return redirect("/")
+        login(requests, user)
+        return redirect("/home/")
+    return render(requests, "login.html")
+
+
+def logout_view(requests):
+    logout(requests)
+    return redirect("/")
