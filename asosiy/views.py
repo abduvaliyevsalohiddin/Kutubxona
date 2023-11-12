@@ -179,30 +179,32 @@ def kitob_update(request, son):
 # Record
 
 def hamma_record(request):
-    if request.method == 'POST':
-        forma = RecordForm(request.POST)
-        if forma.is_valid():
-            forma.save()
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            forma = RecordForm(request.POST)
+            if forma.is_valid():
+                forma.save()
 
-    # if request.method == 'POST':
-    #     Record.objects.create(
-    #         talaba=Talaba.objects.get(id=request.POST.get("talaba")),
-    #         kitob=Kitob.objects.get(id=request.POST.get("kitob")),
-    #         kutubxonachi=Kutubxonachi.objects.get(id=request.POST.get("kutubxonachi"))
-    #     )
-    soz = request.GET.get("qidirish_sozi")
-    natija = Record.objects.all()
-    if soz:
-        natija = natija.filter(talaba__ism__contains=soz)
+        # if request.method == 'POST':
+        #     Record.objects.create(
+        #         talaba=Talaba.objects.get(id=request.POST.get("talaba")),
+        #         kitob=Kitob.objects.get(id=request.POST.get("kitob")),
+        #         kutubxonachi=Kutubxonachi.objects.get(id=request.POST.get("kutubxonachi"))
+        #     )
+        soz = request.GET.get("qidirish_sozi")
+        natija = Record.objects.all()
+        if soz:
+            natija = natija.filter(talaba__ism__contains=soz)
 
-    content = {
-        "recordlar": natija,
-        "talabalar": Talaba.objects.all(),
-        "kitoblar": Kitob.objects.all(),
-        "kutubxonachilar": Kutubxonachi.objects.all(),
-        "forma": RecordForm()
-    }
-    return render(request, "mashq/hamma_record.html", content)
+        content = {
+            "recordlar": natija,
+            "talabalar": Talaba.objects.all(),
+            "kitoblar": Kitob.objects.all(),
+            "kutubxonachilar": Kutubxonachi.objects.all(),
+            "forma": RecordForm()
+        }
+        return render(request, "mashq/hamma_record.html", content)
+    return redirect("/")
 
 
 def record_ochir(request, son):
